@@ -21,7 +21,7 @@ class RetryManager:
         with retry.attempt:
             # code raising exception if fail
 
-    @RetryManager(max_attempts=20, wait_seconds=1, exceptions=(TypeError,KeyError)) as retry:
+    @RetryManager(max_attempts=20, wait_seconds=1, exceptions=(TypeError,KeyError))
     def my_function(*args, **kwargs):
         # my code
     """
