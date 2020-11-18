@@ -10,6 +10,9 @@ Retry manager is context manager for retrying block of code. In fact its double 
  * max_attempts - maximum count of attempts, default 1
  * wait_seconds - How many second it should wait before next retry, default 0
  * exceptions - exception class or tuple of exceptions classes which cause retry, if None all exceptions cause retry default None
+ * reset_func - function to be run before each retry (it is not call on first try)
+
+
  
 ```
 with RetryManager(max_attempts=20, wait_seconds=1, exceptions=(TypeError,KeyError)) as retry:
