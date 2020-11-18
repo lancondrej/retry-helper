@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="retry_helper",
-    version="0.0.2",
+    version="0.0.3",
     author="Ondřej Lanč",
     author_email="ondrej.lanc@gmail.com",
     description="Helper for retrying code when exception occur",
