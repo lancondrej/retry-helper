@@ -1,9 +1,11 @@
 import functools
 import time
 import logging
+import traceback
 from typing import Callable, Optional
 
 logger = logging.getLogger(__name__)
+
 
 class RetryManager:
     """
@@ -44,6 +46,9 @@ class RetryManager:
                 self._retry_manager.succeeded()
                 return bool(self._retry_manager)
             if not self._retry_manager.exceptions or issubclass(exc_type, self._retry_manager.exceptions):
+                tr = "".join(traceback.format_tb(exc_tb))
+                logger.info(f"Exception occur, exception={exc_type.__name__}({exc_val})")
+                logger.debug(f"\n{tr}")
                 time.sleep(self._retry_manager.wait_seconds)
                 return bool(self._retry_manager)
 
@@ -73,16 +78,16 @@ class RetryManager:
 
     def reset(self):
         if self.reset_func:
-            logger.debug(f"Run reset func")
+            logger.info(f"Run reset func")
             self.reset_func(**self.reset_func_kwargs)
 
     def succeeded(self):
-        logger.debug(f"Success on try number {self.attempt_count}")
+        logger.info(f"Success on try number {self.attempt_count}")
         self._success = True
 
     def retry(self):
         self._attempt_count += 1
-        logger.debug(f"Do try number {self.attempt_count}")
+        logger.info(f"Do try number {self.attempt_count}")
 
     def __bool__(self):
         return not self._success and self._attempt_count < self.max_attempts
