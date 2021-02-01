@@ -2,7 +2,7 @@ import functools
 import time
 import logging
 import traceback
-from typing import Callable, Optional
+from typing import Callable, Optional, Union
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +53,7 @@ class RetryManager:
                 return bool(self._retry_manager)
 
     def __init__(self, max_attempts: int = 1, wait_seconds: int = 0,
-                 exceptions: [None, Exception, tuple] = None, reset_func: Optional[Callable] = None,
+                 exceptions: Union[None, Exception, tuple] = None, reset_func: Optional[Callable] = None,
                  reset_func_kwargs: Optional[dict] = None) -> None:
         self.max_attempts = max_attempts
         self._attempt_count = 0
